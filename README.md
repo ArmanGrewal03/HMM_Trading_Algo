@@ -14,7 +14,6 @@ A tiny **Hidden Markov Model (HMM)** script that detects 3 market regimes using:
 **Rule:**  
 - **BUY** when the detected regime is the **Bull** state  
 - **SELL** when the regime changes out of Bull (go to cash)  
-- Optional **fees** via `fee = ...`
 
 ## Input
 Place `AMZN_daily.csv` in the same folder with columns:
