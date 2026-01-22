@@ -1,61 +1,33 @@
-# MACD Trading Strategy Validation
+# HMM Regime Trading (AMZN)
 
-This project tests and validates a **MACD-based trading strategy** using historical stock data (example: `AMZN_daily.csv`).
+<img width="3180" height="1781" alt="figure2_portfolio_value" src="https://github.com/user-attachments/assets/e8d765fc-ab1a-4010-8764-9b6938967d16" />
 
-The strategy uses:
-- 12-day and 26-day exponential moving averages (EMAs)
-- A 9-day signal line
-- A 200-day EMA to determine long-term trend direction
-
-A buy signal occurs when:
-- MACD histogram crosses from negative to positive,
-- both MACD and Signal are below zero, and
-- the trend is upward (price > EMA200).
-
-Each trade applies basic risk management with:
-- Stop loss: 2%
-- Take profit: 3% (1.5× risk)
-
----
-## Related Video
-
-Watch the full breakdown on YouTube:  
-[Losing Loonies YouTube Channel](https://www.youtube.com/@LosingLoonies)
-[Losing Loonies Patreon](https://www.patreon.com/c/LosingLoonies)
+<img width="3179" height="1779" alt="figure1_trading_strategy" src="https://github.com/user-attachments/assets/6efeea8b-d4fb-4c04-859c-c46d769f9c22" />
 
 
 
-## Portfolio Simulation
 
-The script simulates an initial portfolio of **$1000**, applying the strategy over time.
-Each trade outcome (win or loss) affects the portfolio’s value.
+A tiny **Hidden Markov Model (HMM)** script that detects 3 market regimes using:
+- daily **returns** (`close.pct_change()`)
+- daily **range** (`(high-low)/close`)
 
-At the end, the script prints:
-- Total accuracy (percentage of winning trades)
-- Portfolio performance over time
+**Rule:**  
+- **BUY** when the detected regime is the **Bull** state  
+- **SELL** when the regime changes out of Bull (go to cash)  
+- Optional **fees** via `fee = ...`
 
----
+## Input
+Place `AMZN_daily.csv` in the same folder with columns:
+`date,open,high,low,close,volume`
 
-## Results
+## Run
+```bash
+python hmm_regime_strategy.py
+```
+Outputs
 
-Below are the generated results from the simulation.
+Saved to the figures/ folder:
 
-### Figure 1 — Trading Strategy Visualization
-Shows:
-- Price vs EMA200
-- MACD and Signal lines
-- Histogram and buy points
+figure1_trading_strategy.png — Price colored by regime + Buy/Sell markers
 
-![Figure 1: Trading Strategy](figures/figure1_trading_strategy.png)
-
----
-
-### Figure 2 — Portfolio Value Over Time
-Shows:
-- Portfolio growth (or decline) over time
-- Each trade’s cumulative effect on total value
-
-![Figure 2: Portfolio Value Over Time](figures/figure2_portfolio_value.png)
-
----
-
+figure2_portfolio_value.png — Portfolio value over time
